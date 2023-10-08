@@ -7,7 +7,7 @@
 
 /* Apply a simple style to the body */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Gotham;
     background-color: #ffffff;
 }
 
@@ -18,10 +18,16 @@ header {
     font-size: larger;
     line-height: 90px;
     letter-spacing:5px;
-    font-family: gotham;
-    color: #5e5e5e;
+    color: #7c7c7c;
 }
 
+.header h1 {
+    font-weight: 500;
+}
+
+.header p {
+    font-weight: lighter;
+}
 
 /* Style the main content area */
 main {
@@ -118,4 +124,45 @@ main {
 
 .next {
     right: 10px;
+}
+
+/* Add styles for the button */
+#toggleButton {
+    position: fixed;
+    top: 20px; /* Adjust the top position as needed */
+    right: 20px; /* Adjust the right position as needed */
+    width: 40px; /* Set the width of the button */
+    height: 40px; /* Set the height of the button */
+    background-color: #7c7c7c; /* Button background color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius:10px; /* Make the button round */
+    font-size: 24px; /* Font size of the sun icon */
+    cursor: pointer;
+    line-height: 0px;
+}
+
+/* Style the footer */
+footer {
+    color: #7c7c7c;
+    text-align: center;
+    padding: 20vh 0; /* Vertically centered on the screen */
+}
+
+/* Style the About section */
+.about {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.about h2 {
+    margin-bottom: 50px;
+    font-weight: 500;
+    letter-spacing:5px;
+}
+
+.about p {
+    font-size: 22px;
+    line-height: 1.5;
+    font-weight: lighter;
 }

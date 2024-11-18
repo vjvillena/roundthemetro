@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Round the Metro - Street photography capturing the essence of Metro Manila by Victor Hugo Villena">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
-    <title>Round the Metro</title>
+    <script src="script.js" defer></script>
+    <title>Round the Metro | Victor Hugo Villena</title>
 </head>
 <body>
     <header>
@@ -13,25 +14,26 @@
             <h1>ROUND THE METRO</h1>
             <p>VICTOR HUGO VILLENA</p>
         </div>
-        <div class="arrow-box">
-            <div class="arrow">&#9660;</div>
-            <div class="arrow-text">MY WORK</div>
-        </div>
+        <button class="arrow-box" aria-label="View my work">
+            <span class="arrow">&#9660;</span>
+            <span class="arrow-text">MY WORK</span>
+        </button>
     </header>
 
     <main>
-        <section class="gallery" id="gallery">
+        <section class="gallery" id="gallery" aria-label="Photography gallery">
+            <!-- Images will be dynamically inserted here -->
         </section>
     </main>
 
-    <div class="modal" id="imageModal">
-        <span class="close" id="closeModal">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <a class="prev" id="prevImage">&#10094;</a>
-        <a class="next" id="nextImage">&#10095;</a>
+    <div class="modal" id="imageModal" role="dialog" aria-label="Image gallery modal">
+        <button class="close" id="closeModal" aria-label="Close modal">&times;</button>
+        <img class="modal-content" id="modalImage" alt="">
+        <button class="prev" id="prevImage" aria-label="Previous image">&#10094;</button>
+        <button class="next" id="nextImage" aria-label="Next image">&#10095;</button>
     </div>
 
-    <button id="toggleButton">&#9788;</button>
+    <button id="toggleButton" aria-label="Toggle dark mode">&#9788;</button>
 
     <footer>
         <div class="about">

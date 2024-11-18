@@ -1,95 +1,132 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Cache DOM elements
+    const body = document.body;
     const arrowBox = document.querySelector(".arrow-box");
-    const gallerySection = document.getElementById("gallery");
-
-    arrowBox.addEventListener("click", function () {
-        gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const arrowBox = document.querySelector(".arrow-box");
-    const gallerySection = document.getElementById("gallery");
-
-    arrowBox.addEventListener("click", function () {
-        gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
     const gallerySection = document.getElementById("gallery");
     const imageModal = document.getElementById("imageModal");
     const modalImage = document.getElementById("modalImage");
     const closeModal = document.getElementById("closeModal");
     const prevImage = document.getElementById("prevImage");
     const nextImage = document.getElementById("nextImage");
+    const toggleButton = document.getElementById("toggleButton");
 
-    // An array of unique image file names
-    const imageFiles = ["images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg",
-     "images/5.jpg", "images/6.jpg", "images/7.jpg", "images/8.jpg", "images/9.jpg",
-     "images/10.jpg", "images/11.jpg", "images/12.jpg", "images/13.jpg", "images/14.jpg",
-     "images/15.jpg", "images/16.jpg", "images/17.jpg", "images/18.jpg", "images/19.jpg",
-     "images/20.jpg"];
+    // Image gallery configuration
+    const imageFiles = Array.from({ length: 20 }, (_, i) => `images/${i + 1}.jpg`);
     let currentIndex = 0;
 
-    // Function to create a unique image element and add it to the gallery
-    function createUniqueImage(imageFile, i) {
-        if (!document.querySelector(`[src="${imageFile}"]`)) {
+    // Smooth scroll to gallery
+    arrowBox.addEventListener("click", () => {
+        gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // Create gallery images
+    function createGallery() {
+        imageFiles.forEach((imageFile, i) => {
             const img = document.createElement("img");
             img.src = imageFile;
             img.alt = `Street Photo ${i + 1}`;
-            img.addEventListener("click", function () {
-                // Display the clicked image in the modal
-                currentIndex = i;
-                modalImage.src = this.src;
-                imageModal.style.display = "block";
-            });
+            img.loading = "lazy";
+            img.addEventListener("click", () => openModal(i));
             gallerySection.appendChild(img);
-        }
+        });
     }
 
-    // Create and populate the gallery with unique images
-    imageFiles.forEach((imageFile, i) => {
-        createUniqueImage(imageFile, i);
-    });
+    // Modal functions
+    function openModal(index) {
+        currentIndex = index;
+        modalImage.src = imageFiles[currentIndex];
+        modalImage.alt = `Street Photo ${currentIndex + 1}`;
+        imageModal.style.display = "flex"; // Use flex instead of block
+        document.addEventListener("keydown", handleKeyPress);
+        body.style.overflow = "hidden"; // Prevent background scrolling
+    }
 
-    // Close the modal when the close button is clicked
-    closeModal.addEventListener("click", function () {
+    function closeModalHandler() {
         imageModal.style.display = "none";
-    });
-
-    // Navigate to the previous image in the modal
-    prevImage.addEventListener("click", function () {
-        if (currentIndex > 0) {
-            currentIndex--;
-            modalImage.src = imageFiles[currentIndex];
-        }
-    });
-
-    // Navigate to the next image in the modal
-    nextImage.addEventListener("click", function () {
-        if (currentIndex < imageFiles.length - 1) {
-            currentIndex++;
-            modalImage.src = imageFiles[currentIndex];
-        }
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Your existing code ...
-
-    const toggleButton = document.getElementById("toggleButton");
-    const body = document.body;
-    let isDarkMode = false;
-
-    // Function to toggle background color
-    function toggleBackgroundColor() {
-        isDarkMode = !isDarkMode;
-        body.style.backgroundColor = isDarkMode ? "black" : "white";
+        document.removeEventListener("keydown", handleKeyPress);
+        body.style.overflow = ""; // Restore scrolling
     }
 
-    // Add a click event listener to the button
-    toggleButton.addEventListener("click", toggleBackgroundColor);
+    function navigateImages(direction) {
+        currentIndex = (currentIndex + direction + imageFiles.length) % imageFiles.length;
+        
+        // Create new image to prevent jumping
+        const newImage = new Image();
+        newImage.onload = function() {
+            modalImage.src = this.src;
+            modalImage.alt = `Street Photo ${currentIndex + 1}`;
+        };
+        newImage.src = imageFiles[currentIndex];
+    }
+
+    function handleKeyPress(e) {
+        switch(e.key) {
+            case "Escape":
+                closeModalHandler();
+                break;
+            case "ArrowLeft":
+                navigateImages(-1);
+                break;
+            case "ArrowRight":
+                navigateImages(1);
+                break;
+        }
+    }
+
+    // Handle touch events for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    imageModal.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    imageModal.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50; // minimum distance for swipe
+        const swipeDistance = touchEndX - touchStartX;
+        
+        if (Math.abs(swipeDistance) > swipeThreshold) {
+            if (swipeDistance > 0) {
+                // Swiped right
+                navigateImages(-1);
+            } else {
+                // Swiped left
+                navigateImages(1);
+            }
+        }
+    }
+
+    // Event listeners
+    closeModal.addEventListener("click", closeModalHandler);
+    prevImage.addEventListener("click", () => navigateImages(-1));
+    nextImage.addEventListener("click", () => navigateImages(1));
+    toggleButton.addEventListener("click", toggleDarkMode);
+
+    // Click outside modal to close
+    imageModal.addEventListener("click", (e) => {
+        if (e.target === imageModal) {
+            closeModalHandler();
+        }
+    });
+
+    // Dark mode functionality
+    function toggleDarkMode() {
+        body.classList.toggle("dark-mode");
+        const isDarkMode = body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDarkMode);
+    }
+
+    // Initialize dark mode from localStorage
+    const savedDarkMode = localStorage.getItem("darkMode");
+    if (savedDarkMode === "true") {
+        body.classList.add("dark-mode");
+    }
+
+    // Initialize gallery
+    createGallery();
 });

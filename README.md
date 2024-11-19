@@ -17,3 +17,8 @@ Visit the website: [Round the Metro](https://vjvillena.github.io/roundthemetro/)
 - **CSS3**: For styling and responsive design.  
 - **JavaScript (ES6)**: For interactivity and dynamic features.  
 - **GitHub Pages**: For hosting the website.  
+
+## **Contact**  
+Created by **Victor Hugo Villena**  
+- 📷 [Instagram](https://www.instagram.com/victorjacobvillena)  
+- ✉️ [Email](mailto:victorjacobhvillena@gmail.com)

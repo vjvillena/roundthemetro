@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("toggleButton");
 
     // Image gallery configuration
-    const imageFiles = Array.from({ length: 20 }, (_, i) => `images/${i + 1}.jpg`);
+    const imageFiles = Array.from({ length: 40 }, (_, i) => `images/${i + 1}.jpg`);
     let currentIndex = 0;
 
     // Smooth scroll to gallery

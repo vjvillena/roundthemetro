@@ -118,14 +118,36 @@ document.addEventListener("DOMContentLoaded", function () {
     function toggleDarkMode() {
         body.classList.toggle("dark-mode");
         const isDarkMode = body.classList.contains("dark-mode");
+        const toggleIcon = toggleButton.querySelector("i");
+        if (isDarkMode) {
+            toggleIcon.classList.replace("fa-sun", "fa-moon"); // Moon icon for dark mode
+        } else {
+            toggleIcon.classList.replace("fa-moon", "fa-sun"); // Sun icon for light mode
+        }
         localStorage.setItem("darkMode", isDarkMode);
+        updateToggleIcon(isDarkMode);
+    }
+
+    function updateToggleIcon(isDarkMode) {
+        const toggleIcon = toggleButton.querySelector("i");
+        if (isDarkMode) {
+            toggleIcon.classList.replace("fa-sun", "fa-moon"); // Use moon icon for dark mode
+        } else {
+            toggleIcon.classList.replace("fa-moon", "fa-sun"); // Use sun icon for light mode
+        }
     }
 
     // Initialize dark mode from localStorage
-    const savedDarkMode = localStorage.getItem("darkMode");
-    if (savedDarkMode === "true") {
+    const savedDarkMode = localStorage.getItem("darkMode") === "true";
+    if (savedDarkMode) {
         body.classList.add("dark-mode");
-    }
+        toggleButton.querySelector("i").classList.replace("fa-sun", "fa-moon");
+    }    
+
+    updateToggleIcon(savedDarkMode);
+
+    // Event Listener for Dark Mode Toggle
+    toggleButton.addEventListener("click", toggleDarkMode);
 
     // Initialize gallery
     createGallery();

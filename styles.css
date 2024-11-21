@@ -41,7 +41,7 @@ header {
 .arrow-box {
     text-align: center;
     margin-top: 15px;
-    border: 1px solid rgba(139, 139, 139, 0.34);
+    border: 1px solid #8b8b8b57;
     border-radius: 10px;
     display: inline-flex;
     align-items: center;
@@ -49,8 +49,8 @@ header {
     background: transparent;
     cursor: pointer;
     transition: transform var(--transition-speed);
-    color: var(--primary-color); /* Keep the original gray color */
-    padding: 0; /* Remove default button padding */
+    color: var(--primary-color);
+    padding: 0;
 }
 
 .arrow-box:hover {
@@ -58,14 +58,17 @@ header {
 }
 
 .arrow {
+    color: #7c7c7c;
     font-size: 20px;
     margin: 0 5px 0 65px;
 }
 
 .arrow-text {
-    font-size: 16px;
+    font-family: 'Gotham', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 22px;
+    font-weight: 450;
+    letter-spacing: 2px;
     margin: 0 65px 0 5px;
-    font-weight: bold;
 }
 
 /* Rest of your CSS remains the same */
@@ -99,11 +102,10 @@ header {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100vh; /* Use viewport height */
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(5px);
-    /* Center content vertically and horizontally */
-    display: none; /* Will be changed to flex when modal is shown */
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -112,7 +114,7 @@ header {
     max-width: 90%;
     max-height: 80vh;
     object-fit: contain;
-    margin: 0; /* Remove margin since we're using flex centering */
+    margin: 0;
 }
 
 .close,
@@ -124,19 +126,19 @@ header {
     cursor: pointer;
     width: 40px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 50%;
     transition: background-color var(--transition-speed);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1001; /* Ensure buttons are above the image */
+    z-index: 1001;
 }
 
 .close {
     position: absolute;
     top: 15px;
-    right: 15px; /* Adjusted for mobile */
-    font-size: 30px;
+    right: 15px;
+    font-size: 20px;
 }
 
 .prev,
@@ -147,8 +149,13 @@ header {
     font-size: 30px;
 }
 
-.prev { left: 20px; } /* Adjusted for mobile */
-.next { right: 20px; } /* Adjusted for mobile */
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.prev:hover, .next:hover, .close:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #121212;
+}
 
 /* Media Queries */
 @media (max-width: 768px) {
@@ -174,7 +181,7 @@ header {
     }
 
     .gallery img {
-        height: 250px; /* Smaller height for mobile */
+        height: 250px;
     }
 
     /* About section adjustments */
@@ -205,7 +212,7 @@ header {
     .close,
     .prev,
     .next {
-        width: 35px; /* Slightly smaller on mobile */
+        width: 35px;
         height: 35px;
     }
 
@@ -231,7 +238,7 @@ header {
 
     /* Gallery further adjustments */
     .gallery {
-        grid-template-columns: 1fr; /* Single column for smallest screens */
+        grid-template-columns: 1fr;
         gap: 10px;
         padding: 10px;
     }
@@ -253,7 +260,7 @@ header {
     .close,
     .prev,
     .next {
-        width: 30px; /* Even smaller on very small screens */
+        width: 30px;
         height: 30px;
         font-size: 20px;
     }
@@ -272,7 +279,12 @@ header {
     border-radius: 10px;
     font-size: 24px;
     cursor: pointer;
-    transition: transform var(--transition-speed);
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform var(--transition-speed);
+}
+
+body.dark-mode #toggleButton {
+    background-color: var(--primary-color);
+    color: #333333;
 }
 
 #toggleButton:hover {
@@ -302,6 +314,47 @@ footer {
     font-size: 22px;
     line-height: 1.5;
     font-weight: lighter;
+}
+
+.contact {
+    max-width: 650px;
+    margin: 50px auto 0;
+    padding: 0 20px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.contact h2 {
+    margin-bottom: 20px;
+    font-weight: 500;
+    letter-spacing: 5px;
+}
+
+.contact p {
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+.contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact ul li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.contact ul li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact ul li a:hover {
+    color: var(--text-color);
 }
 
 /* Dark mode styles */
